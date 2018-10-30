@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
-import messages from './AppData.jsx';import messags from './AppData.jsx';
+// import messages from './AppData.jsx';import messags from './AppData.jsx';
 import user from './AppData.jsx';
 
 class App extends Component {
@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       loading: true,
       messages: user.messages,
-      user: user
+      user: user,
+      count: 4
     };
     this._handleKeyPress = this._handleKeyPress.bind(this);
   }
@@ -32,18 +33,24 @@ class App extends Component {
     }, 3000)
   }
 
-   _handleKeyPress(e){
-    if(e.keyCode === 13){
 
-     const newMessage = {
+   _handleKeyPress(e){
+    
+    if(e.keyCode === 13){
        
+       
+       
+     const newMessage = {
+        id: this.state.count,
         username: user.currentUser.name,
         content: e.target.value
       }
 
       this.setState({
-        messages: this.state.messages.concat(newMessage)
+        messages: this.state.messages.concat(newMessage),
+        count: this.state.count + 1
       });
+       console.log(newMessage.id);
       }
     }
   
