@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-
+import user from './AppData.jsx';
 class Message extends Component {
   render() {
+
     return (
  
 
   <div className="message">
-    <span className="message-username">Anonymous1</span>
-    <span className="message-content">I won't be impressed with technology until I can download food.</span>
+    <span className="message-username">{this.props.msg.username}</span>
+    <span className="message-content">{this.props.msg.content}</span>
   </div>
 
     );
