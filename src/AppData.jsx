@@ -35,7 +35,7 @@
 // ]
 
 const user = {
-  currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+  currentUser: {name: "Jai"}, // optional. if currentUser is not defined, it means the user is Anonymous
   messages: [
     {
       username: "Bob",
