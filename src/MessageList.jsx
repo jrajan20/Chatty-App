@@ -12,8 +12,8 @@ class MessageList extends Component {
      
 <main className="messages">
   {messages}
-  <div className="message system">
-    Anonymous1 changed their name to nomnom.
+  <div className="notification">
+    {this.props.notification}
   </div>
 </main>
 

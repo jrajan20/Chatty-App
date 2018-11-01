@@ -13,8 +13,9 @@ class App extends Component {
       loading: true,
       messages: user.messages,
       user: user,
-      // count: 4,
-      namevalue: user.currentUser.name
+      usercount: null,
+      namevalue: user.currentUser.name,
+      userchange: ''
     };
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this._userChange = this._userChange.bind(this);
@@ -26,17 +27,40 @@ class App extends Component {
   componentDidMount() {
     // After 3 seconds, set `loading` to false in the state.
      this.chattySocket = new WebSocket('ws://0.0.0.0:3001/')
+    
     console.log(this.socket);
     setTimeout(() => {
        console.log("Simulating incoming message");
+        let users = {
+          type: 'usersOnline',
+          content: null
+        }
+     this.chattySocket.send(JSON.stringify(users));
     // Add a new message to the list of messages in the data store
     this.chattySocket.onmessage = (event)=>{
+
         console.log(JSON.parse(event.data));
        let msgdata = JSON.parse(event.data);
-       this.setState({
-        messages: this.state.messages.concat(msgdata),
-        count: this.state.count + 1
-      });
+       if (msgdata.type === 'usersNotification'){
+         this.setState({
+          usercount: msgdata.content
+        })
+        }
+       if (msgdata.type === 'incomingMessage'){ 
+          this.setState({
+          messages: this.state.messages.concat(msgdata),
+          count: this.state.count + 1
+        });
+        }
+
+       if (msgdata.type === 'incomingNotification'){
+         
+          this.setState({
+            userchange: msgdata.content
+          })
+        }
+        
+       
     }
     // Update the state of the app component.
     // Calling setState will trigger a call to render() in App and all child components.
@@ -51,8 +75,9 @@ class App extends Component {
    _handleKeyPress(e){
     
     if(e.keyCode === 13){    
-     const newMessage = {
-        id: this.state.count,
+     let newMessage = {
+        type: 'postMessage',
+        id: null,
         username: this.state.namevalue,
         content: e.target.value
       }
@@ -63,23 +88,35 @@ class App extends Component {
     }
 
     _userChange(event){
-      this.setState({
-        namevalue: event.target.value
-      })
+      if (event.keyCode === 13){
+         let notification = {
+          type: 'postNotification',
+          content: `${this.state.namevalue} has changed their name to ${event.target.value}`
+        }
+        if (this.state.namevalue !== event.target.value){
+          this.chattySocket.send(JSON.stringify(notification));
+        }
+        this.setState({
+          namevalue: event.target.value
+        }) 
+      }
+      
     }
   
 
   render() {
-
+let styles = {
+  float: 'right'
+}
     return (
-    <div>
-     <nav className="navbar">
-  		<a href="/" className="navbar-brand">Chatty</a>
-	</nav>
-{this.state.loading ? <h2>Loading...</h2>: <MessageList messages={this.state.messages}/>}
-	
-	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} namevalue = {this._userChange}/>
-    </div> 
+<div>
+  <nav className="navbar">
+    <a href="/" className="navbar-brand">Chatty</a>
+    <span style={styles}><h3>{this.state.usercount} users online</h3></span>
+  </nav>
+  {this.state.loading ? <h2>Loading...</h2>: <MessageList messages={this.state.messages} notification = {this.state.userchange}/>}	
+  	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} namevalue = {this._userChange} />
+</div> 
 
     );
   }
