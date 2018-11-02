@@ -4,17 +4,25 @@ class MessageList extends Component {
   render() {
   	const messages = this.props.messages.map(msg =>{
   		return (
-  			<Message key={msg.id} msg={msg}/>
+  			<Message key={msg.id} msg={msg} colors = {this.props.usercolor}/>
   			)
   		});
-  
+    
     return (
      
-<main className="messages">
-  {messages}
-  <div className="notification">
-    {this.props.notification}
-  </div>
+<main className="messages" >
+  
+
+  <span className="notification">
+  {this.props.notification ? 
+    <section>
+    <p>{messages}</p>
+    <p>{this.props.notification}</p>
+    </section>
+    :
+    <p>{messages}</p>
+    }  
+  </span>
 </main>
 
     );

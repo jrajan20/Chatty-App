@@ -15,7 +15,8 @@ class App extends Component {
       user: user,
       usercount: null,
       namevalue: user.currentUser.name,
-      userchange: ''
+      userchange: '',
+      usercolor: 'black'
     };
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this._userChange = this._userChange.bind(this);
@@ -35,7 +36,11 @@ class App extends Component {
           type: 'usersOnline',
           content: null
         }
+
+       
+      
      this.chattySocket.send(JSON.stringify(users));
+     
     // Add a new message to the list of messages in the data store
     this.chattySocket.onmessage = (event)=>{
 
@@ -59,8 +64,13 @@ class App extends Component {
             userchange: msgdata.content
           })
         }
+        if (msgdata.type === 'incomingColor'){
         
-       
+         this.setState({
+          usercolor: msgdata.content
+         })
+          
+        }     
     }
     // Update the state of the app component.
     // Calling setState will trigger a call to render() in App and all child components.
@@ -68,7 +78,7 @@ class App extends Component {
       loading: false,
       }); // this triggers a re-render!
 
-    }, 3000)
+    }, 1000)
   }
 
 
@@ -112,9 +122,9 @@ let styles = {
 <div>
   <nav className="navbar">
     <a href="/" className="navbar-brand">Chatty</a>
-    <span style={styles}><h3>{this.state.usercount} users online</h3></span>
+    <span className='users-online'><h3>{this.state.usercount} users online</h3></span>
   </nav>
-  {this.state.loading ? <h2>Loading...</h2>: <MessageList messages={this.state.messages} notification = {this.state.userchange}/>}	
+  {this.state.loading ? <h2>Loading...</h2>: <MessageList messages={this.state.messages} notification = {this.state.userchange} usercolor={this.state.usercolor}/>}	
   	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} namevalue = {this._userChange} />
 </div> 
 
