@@ -2,15 +2,12 @@ import React, {Component} from 'react';
 
 class ChatBar extends Component {
 
-  render() {
+ render() {
 
-  	
-
-    return (
-   
+ return (   
   <footer className="chatbar">
     <input className="chatbar-username" placeholder= 'Enter Name' onKeyUp= {this.props.namevalue} />
-    <input className="chatbar-message" defaultValue="Type a message and hit ENTER"  onKeyDown = {this.props.onKeyPress}/>
+    <input className="chatbar-message" defaultValue="Type a message and hit ENTER"  onKeyUp = {this.props.onKeyPress}/>
   </footer>
     );
   }

@@ -5,14 +5,11 @@ class Message extends Component {
 	let colors = {
       color: this.props.colors
     }
-    return (
- 
-
-  <div className="message">
-    <span className="message-username" style={colors} >{this.props.msg.username}</span>
-    <span className="message-content">{this.props.msg.content}</span>
-  </div>
-
+    return ( 
+	  <div className="message">
+	    <span className="message-username" style={colors} >{this.props.msg.username}</span>
+	    <span className="message-content">{this.props.msg.content}</span>
+	  </div>
     );
   }
 }

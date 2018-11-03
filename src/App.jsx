@@ -26,8 +26,8 @@ class App extends Component {
  
 
   componentDidMount() {
-    // After 3 seconds, set `loading` to false in the state.
-     this.chattySocket = new WebSocket('ws://0.0.0.0:3001/')
+    
+    this.chattySocket = new WebSocket('ws://0.0.0.0:3001/')
     
     console.log(this.socket);
     setTimeout(() => {
@@ -39,7 +39,7 @@ class App extends Component {
 
        
       
-     this.chattySocket.send(JSON.stringify(users));
+    this.chattySocket.send(JSON.stringify(users));
      
     // Add a new message to the list of messages in the data store
     this.chattySocket.onmessage = (event)=>{
@@ -68,36 +68,35 @@ class App extends Component {
         
          this.setState({
           usercolor: msgdata.content
-         })
-          
+         });
         }     
     }
-    // Update the state of the app component.
-    // Calling setState will trigger a call to render() in App and all child components.
       this.setState({
       loading: false,
-      }); // this triggers a re-render!
+      }); 
 
     }, 1000)
   }
 
-
-   _handleKeyPress(e){
+//Enter message
+  _handleKeyPress(e){
     
-    if(e.keyCode === 13){    
-     let newMessage = {
-        type: 'postMessage',
-        id: null,
-        username: this.state.namevalue,
-        content: e.target.value
+      if(e.keyCode === 13){    
+       let newMessage = {
+          type: 'postMessage',
+          id: null,
+          username: this.state.namevalue,
+          content: e.target.value,
+          color: this.state.usercolor
+        }
+        this.chattySocket.send(JSON.stringify(newMessage));
+        console.log(newMessage.id);
+        }
       }
 
-      this.chattySocket.send(JSON.stringify(newMessage));
-      console.log(newMessage.id);
-      }
-    }
-
+//Enter user
     _userChange(event){
+
       if (event.keyCode === 13){
          let notification = {
           type: 'postNotification',
@@ -109,24 +108,27 @@ class App extends Component {
         this.setState({
           namevalue: event.target.value
         }) 
-      }
-      
+      } 
+
     }
   
 
   render() {
-let styles = {
-  float: 'right'
-}
+    let styles = {
+      float: 'right'
+    }
     return (
-<div>
-  <nav className="navbar">
-    <a href="/" className="navbar-brand">Chatty</a>
-    <span className='users-online'><h3>{this.state.usercount} users online</h3></span>
-  </nav>
-  {this.state.loading ? <h2>Loading...</h2>: <MessageList messages={this.state.messages} notification = {this.state.userchange} usercolor={this.state.usercolor}/>}	
-  	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} namevalue = {this._userChange} />
-</div> 
+      <div>
+      <nav className="navbar">
+      <a href="/" className="navbar-brand">Chatty</a>
+      <span className='users-online'><h3>{this.state.usercount} users online</h3></span>
+      </nav>
+      {this.state.loading ? <h2>Loading...</h2>: 
+        <MessageList messages={this.state.messages} 
+        notification = {this.state.userchange}/>}	
+    	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} 
+        namevalue = {this._userChange} />
+      </div> 
 
     );
   }
