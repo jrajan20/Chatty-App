@@ -125,7 +125,8 @@ class App extends Component {
       </nav>
       {this.state.loading ? <h2>Loading...</h2>: 
         <MessageList messages={this.state.messages} 
-        notification = {this.state.userchange}/>}	
+         notification = {this.state.userchange}
+        />}	
     	<ChatBar user = {this.state.user} onKeyPress={this._handleKeyPress} 
         namevalue = {this._userChange} />
       </div> 

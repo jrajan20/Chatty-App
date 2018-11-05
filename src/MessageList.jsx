@@ -4,9 +4,9 @@ class MessageList extends Component {
   render() {
   	const messages = this.props.messages.map(msg =>{
   		return (
-  			<Message key={msg.id} msg={msg} colors = {msg.color}/>
-  			)
-  		});
+  			<Message key={msg.id} msg={msg} colors = {msg.color}/> 
+  		)
+  	});
     
     return (
      
