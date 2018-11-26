@@ -5,9 +5,9 @@ A minimalistic chat application made using React library and web sockets.  This 
 
 ### Screenshots
 
-!["Chat App page:"](https://github.com/jrajan20/Chatty-App/blob/master/Screenshots/Screenshot%20from%202018-11-04%2020-42-04.png)
+!["Chat App page:"](https://raw.githubusercontent.com/jrajan20/Chatty-App/master/Screenshots/Screenshot%20from%202018-11-25%2021-47-20.png)
 
-!['Chatting with multiple users:'](https://github.com/jrajan20/Chatty-App/blob/master/Screenshots/Screenshot%20from%202018-11-04%2020-36-26.png)
+!['Chatting with multiple users:'](https://raw.githubusercontent.com/jrajan20/Chatty-App/master/Screenshots/Screenshot%20from%202018-11-25%2021-37-07.png)
 
 ### Usage
 
