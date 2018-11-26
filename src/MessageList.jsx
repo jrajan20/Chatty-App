@@ -7,20 +7,17 @@ class MessageList extends Component {
   			<Message key={msg.id} msg={msg} colors = {msg.color}/> 
   		)
   	});
+
+
     
     return (
      
       <main className="messages" >
 
         <span className="notification">
-        {this.props.notification ? 
           <section>
-          <p>{messages}</p>
-          <p>{this.props.notification}</p>
+            <p>{messages}</p>
           </section>
-          :
-          <p>{messages}</p>
-          }  
         </span>
 
       </main>

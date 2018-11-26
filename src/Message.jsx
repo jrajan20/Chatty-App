@@ -5,12 +5,28 @@ class Message extends Component {
 	let colors = {
       color: this.props.colors
     }
-    return ( 
-	  <div className="message">
-	    <span className="message-username" style={colors} >{this.props.msg.username}</span>
-	    <span className="message-content">{this.props.msg.content}</span>
-	  </div>
-    );
+    if (this.props.msg.type == 'incomingMessage'){
+      return ( 
+        <div className="message">
+          <span>  
+            <span className="message-username" style={colors}>{this.props.msg.username}</span>
+            <span className="message-content">{this.props.msg.content}</span>
+            <br/>
+          </span>      
+        </div>
+      );
+    }
+    if (this.props.msg.type == 'incomingNotification'){
+      return ( 
+        <div className="message">
+          <span>  
+            <span className="message-content">{this.props.msg.content}</span>
+            <br/>
+          </span>      
+        </div>
+      );
+    }
+    
   }
 }
 export default Message;

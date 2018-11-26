@@ -22,6 +22,16 @@ wss.on('connection', (ws) => {
 
   console.log('Client connected');
 
+//count clients connected
+  function userCount(){
+    let notification = {
+      type:'usersNotification',
+      content: wss.clients.size
+    }
+    
+    broadcastBack(notification);
+  }
+
   //random color generator
   let color = ['red','blue','green','orange','yellow','pink']
   let colorNum = Math.floor(Math.random()*color.length);
@@ -49,9 +59,7 @@ wss.on('connection', (ws) => {
       broadcastBack(message);
     }
     if (message.type === 'usersOnline'){
-      message.type = 'usersNotification'
-      message.content = wss.clients.size;
-      broadcastBack(message);
+      userCount()
     }
 
   	console.log(message);
@@ -66,5 +74,9 @@ wss.on('connection', (ws) => {
 
 }
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+  //updates user amount when client disconnects
+    userCount();
+  });
 });
