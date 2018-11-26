@@ -62,7 +62,6 @@ wss.on('connection', (ws) => {
       userCount()
     }
 
-  	console.log(message);
   });
 
   //send message to all clients

@@ -29,7 +29,7 @@ class App extends Component {
     this.chattySocket = new WebSocket('ws://0.0.0.0:3001/')
      
     setTimeout(() => {
-       console.log("Simulating incoming message");
+       
         let users = {
           type: 'usersOnline',
           content: null
@@ -39,7 +39,7 @@ class App extends Component {
        
       // Add a new message to the list of messages in the data store
       this.chattySocket.onmessage = (event)=>{
-         console.log(JSON.parse(event.data));
+         
          let msgdata = JSON.parse(event.data);
 
          if (msgdata.type === 'usersNotification'){
@@ -86,7 +86,7 @@ class App extends Component {
         color: this.state.usercolor
       }
       this.chattySocket.send(JSON.stringify(newMessage));
-      console.log(newMessage.id);
+      
   
   }
 
